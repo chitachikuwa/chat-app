@@ -2,6 +2,8 @@ class MessagesController < ApplicationController
   def index
     @Message = Message.new
     @room = Room.find(params[:room_id])
+    @messages = room.messages.Include(:user)
+
   end
 
   def carate
@@ -10,6 +12,7 @@ class MessagesController < ApplicationController
      if @message.save
       redirect_to room_messasges_new_path(@room)
      else
+      @messages = @room.messages.Include(:user)
       render :index 
   end
 
